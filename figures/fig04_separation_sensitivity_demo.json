@@ -1,0 +1,11 @@
+{
+  "git_commit": "LOCAL_UNCOMMITTED",
+  "config_sha256": "7659dd869c9d80a8e0614267599d40a484a8bff9153a56f05cb3d7c302969935",
+  "figure": "separation_sensitivity",
+  "bins": [
+    ">60as",
+    "20-60as",
+    "5-20as",
+    "<5as"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "title": "Gaia Wide-Binary Astrometric Consistency Audit",
+  "repo": "gaia-star-pairs",
+  "category": "Astrometry / scientific data science",
+  "status": "BUILD_FIRST",
+  "priority": 9.1,
+  "question": "Are component parallaxes and proper motions statistically consistent with quoted Gaia uncertainties across magnitude, separation and quality bins?",
+  "gap": "A compact uncertainty-calibration audit; not a new binary catalogue, orbit fit or gravity test.",
+  "dataMode": "real public wide-binary catalogue",
+  "novelty": "A compact uncertainty-calibration audit; not a new binary catalogue, orbit fit or gravity test.",
+  "figures": [
+    { "id": "fig01_selection_flow_real", "label": "Selection flow" },
+    { "id": "fig02_normalized_residuals_real", "label": "Normalized residuals" },
+    { "id": "fig03_scale_vs_magnitude_real", "label": "Scale vs magnitude" },
+    { "id": "fig04_separation_sensitivity_real", "label": "Separation sensitivity" },
+    { "id": "fig05_synthetic_recovery", "label": "Synthetic scale recovery" }
+  ],
+  "validationContract": [
+    "synthetic scale recovery",
+    "component-swap invariance",
+    "bootstrap bin scales",
+    "quality-cut sensitivity",
+    "runtime/memory"
+  ],
+  "methodology": "For each wide-binary pair, normalized residuals z_parallax = (plx1-plx2)/sqrt(sigma1^2+sigma2^2) and a 2-dof proper-motion chi-square are computed from live-queried Gaia DR3 astrometry. If a pair is a genuine common-distance co-moving system with correctly calibrated Gaia uncertainties, z_parallax ~ N(0,1). The empirical uncertainty scale factor S = sqrt(mean(z^2)) is reported per magnitude/separation/quality bin: S~1 means well-calibrated uncertainties, S>1 means the true scatter exceeds what Gaia quotes.",
+  "assumptions": [
+    "The originally-planned El-Badry, Rix & Heintz (2021) VizieR designation (J/MNRAS/506/2269) does not exist in VizieR's TAP_SCHEMA (confirmed live); real data instead uses the directly relevant Heintz et al. Wide White Dwarf Binary Catalog (VizieR J/ApJ/934/148/tablea1), a narrower but thematically identical population for this consistency question.",
+    "Proper-motion correlation terms between pmra and pmdec are not retained from the archive columns used here and are conservatively ignored.",
+    "A pair is assumed to have zero true relative proper motion (shared space velocity); orbital motion in physically close pairs is not modelled and can inflate the empirical scale factor independent of any real uncertainty miscalibration."
+  ],
+  "limitations": [
+    "A compact uncertainty-calibration audit; not a new binary catalogue, orbit fit or gravity test.",
+    "Large empirical scale factors in several bins (up to ~27 in the noisiest sub-bin) are plausibly driven by real orbital motion in close white-dwarf pairs rather than purely a Gaia uncertainty-calibration defect; disentangling the two is a natural next extension, not attempted here.",
+    "Most bins (all magnitude and separation bins, n=3-12) are below the configured minimum_sample_size=30, flagged not hidden in results/warnings.json.",
+    "reports/report.tex could not be compiled to PDF in this environment (no local LaTeX toolchain); only structural completeness was verified."
+  ],
+  "citation": {
+    "author": "Biswajit Jana",
+    "license": "BSD-3-Clause (original code); mission/archive products retain their original terms",
+    "repository": "https://github.com/Biswajit1999/gaia-star-pairs"
+  }
+}

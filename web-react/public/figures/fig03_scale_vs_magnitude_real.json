@@ -1,0 +1,9 @@
+{
+  "git_commit": "LOCAL_UNCOMMITTED",
+  "config_sha256": "7659dd869c9d80a8e0614267599d40a484a8bff9153a56f05cb3d7c302969935",
+  "figure": "scale_vs_magnitude",
+  "bins": [
+    "G>18",
+    "15<G<=18"
+  ]
+}
