@@ -2,7 +2,7 @@
 (2021) Gaia EDR3 wide-binary candidates, cross-matched against live Gaia DR3
 astrometry for each component.
 
-Gated behind --i-have-authorization per CLAUDE_TASK.md. Two live network
+Gated behind --i-have-authorization per docs/VALIDATION_CONTRACT.md. Two live network
 calls: VizieR (astroquery.vizier) for the wide-binary candidate list, then
 astroquery.gaia for authoritative DR3 parallax/pm/uncertainty/RUWE for every
 component source_id. Writes data/processed/real_pairs.csv (input to

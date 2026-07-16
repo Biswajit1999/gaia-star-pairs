@@ -1,6 +1,6 @@
 # Local Completion Report — Gaia Wide-Binary Astrometric Consistency Audit
 
-Author: Biswajit Jana. This report documents a local Claude Code implementation pass
+Author: Biswajit Jana. This report documents a local implementation pass
 (project 7 of the 30-project pack, `BUILD_FIRST` priority 9.1/10). No git operations
 were performed. Nothing has been published.
 

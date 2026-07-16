@@ -3,7 +3,7 @@
 `run_pipeline` wires io -> quality (binning) -> statistics (chi2 consistency)
 -> residuals (per-bin scale) for a list of pair records, never aborting the
 whole run for one bad pair (per-pair failures are caught and converted to
-warning strings, per CLAUDE_TASK.md / docs/ERROR_HANDLING.md).
+warning strings, per docs/VALIDATION_CONTRACT.md / docs/ERROR_HANDLING.md).
 """
 from __future__ import annotations
 

@@ -1,6 +1,6 @@
 # Implementation Plan — Gaia Wide-Binary Astrometric Consistency Audit
 
-Author: Biswajit Jana. Local Claude Code implementation pass. No git/remote operations.
+Author: Biswajit Jana. Local implementation pass. No git/remote operations.
 
 ## 1. Literature verification (docs/LITERATURE_SEEDS.md)
 
@@ -80,7 +80,7 @@ Domain modules (docs/RESEARCH_BLUEPRINT.md's "Reusable scientific modules"):
 - `statistics.py` — magnitude/separation/quality binning of the consistency
   statistic and the uncertainty "scale factor" (sqrt(mean(z^2))) per bin.
 - `uncertainty.py` — `bootstrap_statistic` (observational) and
-  `check_fit_convergence` (numerical), kept separate per CLAUDE_TASK.md.
+  `check_fit_convergence` (numerical), kept separate per docs/VALIDATION_CONTRACT.md.
 - `benchmarks.py` — tracemalloc + perf_counter wrapper, JSON writer.
 - `plotting.py` — kept as the smoke-test demo plot helper (pre-existing).
 - `core.py` — `run_pipeline` orchestrator; per-pair try/except over

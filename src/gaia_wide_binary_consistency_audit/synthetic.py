@@ -9,7 +9,7 @@ validate that `statistics.pair_chi2_consistency` recovers scale_factor~1
 (well-calibrated), scale_factor>1 (underestimated errors), etc.
 
 All synthetic data is clearly labelled and MUST NOT be presented as a real
-scientific result (CLAUDE_TASK.md).
+scientific result (docs/VALIDATION_CONTRACT.md).
 """
 from __future__ import annotations
 

@@ -8,6 +8,6 @@ The following are starting points, not a substitute for final citation verificat
 - El-Badry 2024 binary-star review, arXiv:2403.12146
 - Astropy core package paper
 
-## Claude requirement
+## Verification requirement
 
 Before finalising `references.bib`, verify each title, author list, year, journal, DOI/arXiv identifier and archive URL against a primary source. If a citation cannot be verified, mark it `TODO_VERIFY` rather than inventing metadata.
