@@ -1,0 +1,8 @@
+[
+  {
+    "label": "run_pipeline[real_gaia_dr3_wide_binary_sample]",
+    "wall_time_seconds": 0.021257599990349263,
+    "peak_memory_bytes": 30794,
+    "n_items": 30
+  }
+]

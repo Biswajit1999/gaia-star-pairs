@@ -1,0 +1,84 @@
+{
+  "project": "gaia-wide-binary-consistency-audit",
+  "data_kind": "real_gaia_dr3_wide_binary_sample",
+  "metrics": [
+    {
+      "name": "fraction_inconsistent",
+      "estimate": 0.4,
+      "uncertainty_low": null,
+      "uncertainty_high": null,
+      "units": "fraction",
+      "sample_size": 30
+    },
+    {
+      "name": "n_pairs_processed",
+      "estimate": 30.0,
+      "uncertainty_low": null,
+      "uncertainty_high": null,
+      "units": "count",
+      "sample_size": 30
+    },
+    {
+      "name": "rms_z_combined__magnitude__G>18",
+      "estimate": 3.2366641821743345,
+      "uncertainty_low": null,
+      "uncertainty_high": null,
+      "units": "dimensionless (sigma)",
+      "sample_size": 27
+    },
+    {
+      "name": "rms_z_combined__magnitude__15<G<=18",
+      "estimate": 27.01904093089224,
+      "uncertainty_low": null,
+      "uncertainty_high": null,
+      "units": "dimensionless (sigma)",
+      "sample_size": 3
+    },
+    {
+      "name": "rms_z_combined__separation__5-20as",
+      "estimate": 13.877642372518451,
+      "uncertainty_low": null,
+      "uncertainty_high": null,
+      "units": "dimensionless (sigma)",
+      "sample_size": 11
+    },
+    {
+      "name": "rms_z_combined__separation__<5as",
+      "estimate": 4.933398969373412,
+      "uncertainty_low": null,
+      "uncertainty_high": null,
+      "units": "dimensionless (sigma)",
+      "sample_size": 12
+    },
+    {
+      "name": "rms_z_combined__separation__>60as",
+      "estimate": 4.403347174398282,
+      "uncertainty_low": null,
+      "uncertainty_high": null,
+      "units": "dimensionless (sigma)",
+      "sample_size": 3
+    },
+    {
+      "name": "rms_z_combined__separation__20-60as",
+      "estimate": 1.0282928224187806,
+      "uncertainty_low": null,
+      "uncertainty_high": null,
+      "units": "dimensionless (sigma)",
+      "sample_size": 4
+    },
+    {
+      "name": "rms_z_combined__quality__good",
+      "estimate": 9.07916586520349,
+      "uncertainty_low": null,
+      "uncertainty_high": null,
+      "units": "dimensionless (sigma)",
+      "sample_size": 30
+    }
+  ],
+  "provenance": {
+    "git_commit": "LOCAL_UNCOMMITTED",
+    "config_sha256": "7659dd869c9d80a8e0614267599d40a484a8bff9153a56f05cb3d7c302969935",
+    "data_kind": "real_gaia_dr3_wide_binary_sample"
+  },
+  "warnings": []
+}
