@@ -1,4 +1,5 @@
 .venv/
+*.egg-info/
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -8,6 +9,7 @@ __pycache__/
 data/raw/*
 !data/raw/README.md
 /results/
+/figures/fig00_smoke_test.png
 web-react/node_modules/
 web-react/dist/
 _PROJECT_LOG.md

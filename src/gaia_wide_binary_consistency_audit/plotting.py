@@ -12,9 +12,12 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+import scienceplots  # noqa: F401 - importing registers the SciencePlots styles
 
 from gaia_wide_binary_consistency_audit.residuals import BinScale
 from gaia_wide_binary_consistency_audit.statistics import PairConsistency
+
+plt.style.use(["science", "no-latex"])
 
 
 def plot_demo(values: np.ndarray, output: str | Path) -> Path:
@@ -36,7 +39,7 @@ def _save(fig: plt.Figure, base_path: Path) -> tuple[Path, Path]:
     base_path.parent.mkdir(parents=True, exist_ok=True)
     svg_path = base_path.with_suffix(".svg")
     png_path = base_path.with_suffix(".png")
-    fig.savefig(svg_path)
+    fig.savefig(svg_path, dpi=180)
     fig.savefig(png_path, dpi=300)
     plt.close(fig)
     return svg_path, png_path

@@ -1,129 +1,141 @@
-import { useEffect, useState } from 'react';
+import { Component, lazy, Suspense, useEffect, useState } from 'react';
 import {
-  Database, ShieldCheck, AlertTriangle, BookOpen, FileText,
-  Download, GitCommit, Beaker, ListChecks,
+  AlertTriangle,
+  ArrowDownToLine,
+  Asterisk,
+  BookOpen,
+  Check,
+  CheckCircle2,
+  Database,
+  ExternalLink,
+  FileText,
+  GitCommit,
+  Orbit,
+  ShieldCheck,
+  Sparkles,
 } from 'lucide-react';
 
-const card = 'rounded-2xl border border-slate-800 bg-slate-950/70 p-5 shadow-2xl shadow-black/20';
-const pill = 'rounded-full border border-slate-700 px-4 py-2 text-sm';
+const GaiaHero = lazy(() => import('./GaiaHero.jsx'));
 
 function useJson(path) {
   const [state, setState] = useState({ data: null, error: null, loading: true });
+
   useEffect(() => {
-    let cancelled = false;
-    fetch(path)
-      .then((r) => {
-        if (!r.ok) throw new Error(`${path}: HTTP ${r.status}`);
-        return r.json();
+    const controller = new AbortController();
+    fetch(path, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
+        return response.json();
       })
-      .then((data) => { if (!cancelled) setState({ data, error: null, loading: false }); })
-      .catch((error) => { if (!cancelled) setState({ data: null, error, loading: false }); });
-    return () => { cancelled = true; };
+      .then((data) => setState({ data, error: null, loading: false }))
+      .catch((error) => {
+        if (error.name !== 'AbortError') setState({ data: null, error, loading: false });
+      });
+    return () => controller.abort();
   }, [path]);
+
   return state;
 }
 
-function MetricCard({ metric }) {
-  const hasUncertainty = metric.uncertainty_low != null && metric.uncertainty_high != null;
+function formatMetric(value) {
+  return typeof value === 'number' && Number.isFinite(value) ? value.toPrecision(4) : 'Not available';
+}
+
+function ChapterTitle({ number, kicker, title, copy }) {
   return (
-    <article className={card}>
-      <p className="text-sm text-slate-400">{metric.name.replace(/_/g, ' ')}</p>
-      <p className="mt-2 text-2xl font-semibold">
-        {typeof metric.estimate === 'number' ? metric.estimate.toPrecision(4) : String(metric.estimate)}
-        <span className="ml-1 text-sm font-normal text-slate-400">{metric.units}</span>
-      </p>
-      {hasUncertainty && (
-        <p className="mt-1 text-xs text-slate-400">
-          95% CI [{metric.uncertainty_low.toPrecision(3)}, {metric.uncertainty_high.toPrecision(3)}]
-        </p>
+    <div className="chapter-title">
+      <div className="chapter-number">{number}</div>
+      <div>
+        <p>{kicker}</p>
+        <h2>{title}</h2>
+      </div>
+      {copy && <span>{copy}</span>}
+    </div>
+  );
+}
+
+function MetricFeature({ metric, index }) {
+  const hasInterval = metric.uncertainty_low != null && metric.uncertainty_high != null;
+  return (
+    <article className="metric-feature">
+      <div className="metric-coordinate">M{String(index + 1).padStart(2, '0')}</div>
+      <p>{metric.name.replace(/_/g, ' ')}</p>
+      <strong>{formatMetric(metric.estimate)}</strong>
+      <span>{metric.units}</span>
+      {hasInterval && (
+        <small>95% CI [{metric.uncertainty_low.toPrecision(3)}, {metric.uncertainty_high.toPrecision(3)}]</small>
       )}
-      <p className="mt-1 text-xs text-slate-500">n = {metric.sample_size}</p>
+      <small>n = {metric.sample_size}</small>
     </article>
   );
 }
 
-function Section({ icon: Icon, title, children }) {
+function MetricRegisterRow({ metric, index }) {
   return (
-    <article className={card}>
-      <div className="mb-4 flex items-center gap-2">
-        <Icon size={18} />
-        <h2 className="font-semibold">{title}</h2>
+    <article className="metric-row">
+      <span>{String(index + 1).padStart(2, '0')}</span>
+      <p>{metric.name.replace(/_/g, ' ')}</p>
+      <strong>{formatMetric(metric.estimate)}</strong>
+      <small>{metric.units} · n={metric.sample_size}</small>
+    </article>
+  );
+}
+
+function AuditCard({ icon: Icon, title, children, className = '' }) {
+  return (
+    <article className={`audit-card ${className}`}>
+      <div className="audit-card-heading">
+        <Icon size={17} aria-hidden="true" />
+        <h3>{title}</h3>
       </div>
       {children}
     </article>
   );
 }
 
-
-function inverseNormalCDF(p) {
-  if (p <= 0 || p >= 1) return NaN;
-  const a = [-3.969683028665376e+01, 2.209460984245205e+02, -2.759285104469687e+02, 1.383577518672690e+02, -3.066479806614716e+01, 2.506628277459239e+00];
-  const b = [-5.447609879822406e+01, 1.615858368580409e+02, -1.556989798598866e+02, 6.680131188771972e+01, -1.328068155288572e+01];
-  const c = [-7.784894002430293e-03, -3.223964580411365e-01, -2.400758277161838e+00, -2.549732539343734e+00, 4.374664141464968e+00, 2.938163982698783e+00];
-  const d = [7.784695709041462e-03, 3.224671290700398e-01, 2.445134137142996e+00, 3.754408661907416e+00];
-  const pLow = 0.02425, pHigh = 1 - pLow;
-  let q, r;
-  if (p < pLow) {
-    q = Math.sqrt(-2 * Math.log(p));
-    return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) / ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
-  } else if (p <= pHigh) {
-    q = p - 0.5; r = q * q;
-    return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q / (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
-  } else {
-    q = Math.sqrt(-2 * Math.log(1 - p));
-    return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) / ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+function WarningLedger({ warnings }) {
+  if (warnings.loading) return <p className="ledger-loading">Reading results/warnings.json…</p>;
+  if (warnings.error) {
+    return <p className="ledger-error">Could not load results/warnings.json: {String(warnings.error)}</p>;
   }
+
+  const entries = Array.isArray(warnings.data) ? warnings.data : [];
+  if (entries.length === 0) {
+    return (
+      <div className="ledger-clear">
+        <div><CheckCircle2 size={25} aria-hidden="true" /></div>
+        <section>
+          <p>Clear audit trail</p>
+          <strong>No warnings recorded</strong>
+          <span>The live results/warnings.json file contains an empty list.</span>
+        </section>
+        <small>0 entries</small>
+      </div>
+    );
+  }
+
+  return (
+    <details className="warning-details">
+      <summary>{entries.length} documented warning {entries.length === 1 ? 'entry' : 'entries'} · show raw ledger</summary>
+      <ol>{entries.map((entry, index) => <li key={`${index}-${String(entry)}`}>{String(entry)}</li>)}</ol>
+    </details>
+  );
 }
 
-function ConfidenceExplorer({ metrics }) {
-  const withCI = (metrics || []).filter((m) => m.uncertainty_low != null && m.uncertainty_high != null);
-  const [selected, setSelected] = useState(null);
-  const [confidence, setConfidence] = useState(95);
-  useEffect(() => { if (!selected && withCI.length > 0) setSelected(withCI[0].name); }, [withCI, selected]);
-  if (withCI.length === 0) return null;
-  const metric = withCI.find((m) => m.name === selected) ?? withCI[0];
-  const z95 = 1.959963984540054;
-  const halfWidth95 = (metric.uncertainty_high - metric.uncertainty_low) / 2;
-  const sigma = halfWidth95 / z95;
-  const zLevel = inverseNormalCDF(0.5 + confidence / 200);
-  const lo = metric.estimate - zLevel * sigma;
-  const hi = metric.estimate + zLevel * sigma;
-  return (
-    <Section icon={Beaker} title="Confidence-level explorer">
-      <p className="mb-4 text-xs text-slate-500">
-        Recomputes an approximate confidence interval at any level from this metric's reported 95%
-        bootstrap interval, assuming a normal sampling distribution. This is a client-side
-        approximation for exploring sensitivity around the real result &mdash; it does not
-        re-run the bootstrap; the 95% CI shown in the metric cards above is the actual computed
-        result from <code>uncertainty.py</code>.
-      </p>
-      {withCI.length > 1 && (
-        <select
-          className="mb-4 w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200"
-          value={metric.name}
-          onChange={(e) => setSelected(e.target.value)}
-        >
-          {withCI.map((m) => <option key={m.name} value={m.name}>{m.name.replace(/_/g, ' ')}</option>)}
-        </select>
-      )}
-      <label className="flex items-center justify-between text-sm text-slate-300">
-        <span>Confidence level</span>
-        <span className="font-mono">{confidence.toFixed(1)}%</span>
-      </label>
-      <input
-        type="range" min="50" max="99.9" step="0.1" value={confidence}
-        onChange={(e) => setConfidence(Number(e.target.value))}
-        className="mt-2 w-full accent-cyan-500"
-      />
-      <p className="mt-4 text-2xl font-semibold">
-        [{lo.toPrecision(4)}, {hi.toPrecision(4)}]
-        <span className="ml-2 text-sm font-normal text-slate-400">{metric.units}</span>
-      </p>
-      <p className="mt-1 text-xs text-slate-500">
-        estimate {metric.estimate.toPrecision(4)}, n = {metric.sample_size}
-      </p>
-    </Section>
-  );
+class HeroBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { failed: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    if (this.state.failed) return <div className="gaia-hero-fallback">Astrometry illustration unavailable.</div>;
+    return this.props.children;
+  }
 }
 
 export default function App() {
@@ -132,148 +144,160 @@ export default function App() {
   const warnings = useJson('./results/warnings.json');
   const benchmarks = useJson('./results/benchmarks.json');
 
-  if (project.loading) {
-    return <main className="min-h-screen grid place-items-center">Loading local project metadata…</main>;
-  }
+  if (project.loading) return <main className="loading-page">Loading astrometry ledger…</main>;
   if (project.error || !project.data) {
-    return (
-      <main className="min-h-screen grid place-items-center text-amber-300">
-        Could not load project.json: {String(project.error)}
-      </main>
-    );
+    return <main className="loading-page loading-failed">Could not load project.json: {String(project.error)}</main>;
   }
+
   const p = project.data;
+  const metrics = summary.data?.metrics ?? [];
   const isDemo = summary.data?.data_kind === 'synthetic_smoke_test' || summary.data?.data_kind === 'synthetic_demo';
 
   return (
-    <main className="grid-bg min-h-screen">
-      <div className="mx-auto max-w-7xl px-5 py-10">
-        <header className="mb-8 rounded-3xl border border-slate-800 bg-slate-950/80 p-7 backdrop-blur">
-          <p className="mb-3 text-sm uppercase tracking-[0.28em] text-cyan-300">{p.category}</p>
-          <h1 className="max-w-5xl text-3xl font-semibold leading-tight md:text-5xl">{p.title}</h1>
-          <p className="mt-5 max-w-4xl text-lg text-slate-300">{p.question}</p>
-          <div className="mt-6 flex flex-wrap gap-3 text-sm">
-            <span className={`${pill} border-cyan-800 bg-cyan-950/50`}>{p.status}</span>
-            <span className={pill}>Priority {p.priority}/10</span>
-            <span className={pill}>{p.dataMode}</span>
-            {summary.data && (
-              <span className={`${pill} ${isDemo ? 'border-amber-800 bg-amber-950/40 text-amber-200' : 'border-emerald-800 bg-emerald-950/40 text-emerald-200'}`}>
-                {isDemo ? 'SYNTHETIC DEMO RESULTS' : 'REAL DATA RESULTS'}
-              </span>
-            )}
+    <main className="sky-shell">
+      <aside className="atlas-rail">
+        <a className="rail-brand" href="#overview">
+          <Orbit size={22} aria-hidden="true" />
+          <span>Gaia pair atlas</span>
+        </a>
+        <nav aria-label="Report chapters">
+          <a href="#findings"><span>01</span>Findings</a>
+          <a href="#figures"><span>02</span>Figures</a>
+          <a href="#audit"><span>03</span>Audit</a>
+          <a href="#method"><span>04</span>Method</a>
+          <a href="#data"><span>05</span>Data</a>
+        </nav>
+        <div className="rail-status">
+          <Asterisk size={15} aria-hidden="true" />
+          <p>{isDemo ? 'Synthetic demo' : 'Real public data'}</p>
+          <span>{p.status}</span>
+        </div>
+        <p className="rail-credit">Astrometric consistency · Biswajit Jana</p>
+      </aside>
+
+      <div className="observatory-page">
+        <header className="mission-hero" id="overview">
+          <div className="hero-star-label"><Sparkles size={14} /> {p.category}</div>
+          <div className="mission-copy">
+            <p className="mission-index">Research atlas / 07</p>
+            <h1>{p.title}</h1>
+            <p className="mission-question">{p.question}</p>
+            <div className="mission-tags">
+              <span>{p.dataMode}</span>
+              <span>Priority {p.priority}/10</span>
+              <span>{summary.data ? (isDemo ? 'Demo result set' : 'Verified result set') : 'Awaiting results'}</span>
+            </div>
           </div>
+          <figure className="gaia-figure">
+            <HeroBoundary>
+              <Suspense fallback={<div className="gaia-hero-fallback">Loading survey geometry…</div>}>
+                <GaiaHero />
+              </Suspense>
+            </HeroBoundary>
+            <figcaption>Stylized illustration, not flight data</figcaption>
+          </figure>
+          <div className="hero-rule"><span>paired-source consistency</span><i /></div>
         </header>
 
         {isDemo && (
-          <div className="mb-6 flex items-start gap-2 rounded-xl border border-amber-900 bg-amber-950/30 p-4 text-sm text-amber-200">
-            <AlertTriangle size={18} className="mt-0.5 shrink-0" />
-            The metrics and figures below were generated from clearly-labelled synthetic demo data
-            (scripts/run_analysis.py --demo), not real Gaia wide-binary data. Real-data results appear
-            here automatically once scripts/fetch_data.py and scripts/run_analysis.py --real have been run.
+          <div className="demo-notice">
+            <AlertTriangle size={18} aria-hidden="true" />
+            <p>These metrics and figures are synthetic validation output, not real Gaia wide-binary measurements.</p>
           </div>
         )}
 
-        <section className="grid gap-4 md:grid-cols-3">
-          {summary.data?.metrics?.slice(0, 6).map((m) => <MetricCard key={m.name} metric={m} />)}
-          {!summary.data && (
-            <article className={card}>
-              <p className="text-sm text-slate-400">Result status</p>
-              <p className="mt-2 text-2xl font-semibold">NO RESULTS YET</p>
-              <p className="mt-1 text-xs text-slate-500">Run scripts/run_analysis.py first.</p>
-            </article>
-          )}
-        </section>
-
-        <section className="mt-6 grid gap-6 lg:grid-cols-2">
-          <ConfidenceExplorer metrics={summary.data?.metrics} />
-        </section>
-
-        <section className="mt-6 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
-          <Section icon={BookOpen} title="Figure gallery">
-            <div className="grid gap-4 sm:grid-cols-2">
-              {p.figures.map((f) => (
-                <figure key={f.id} className="rounded-xl border border-slate-800 bg-slate-900/60 p-3">
-                  <img
-                    src={`./figures/${f.id}.svg`}
-                    alt={f.label}
-                    className="w-full rounded-lg bg-white"
-                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                  />
-                  <figcaption className="mt-2 text-sm text-slate-300">{f.label}</figcaption>
-                </figure>
-              ))}
+        <section className="chapter findings-chapter" id="findings">
+          <ChapterTitle number="01" kicker="Measured register" title="How consistent are the pairs?" copy="The six headline quantities are read directly from results/summary.json; no values are embedded in this interface." />
+          {summary.error && <p className="ledger-error">Could not load results/summary.json: {String(summary.error)}</p>}
+          <div className="metric-layout">
+            <div className="metric-features">
+              {metrics.slice(0, 2).map((metric, index) => <MetricFeature metric={metric} index={index} key={metric.name} />)}
             </div>
-          </Section>
-          <Section icon={ShieldCheck} title="Provenance boundary">
-            <p className="text-slate-300">{p.novelty}</p>
-            <div className="mt-5 flex items-start gap-2 rounded-xl border border-amber-900 bg-amber-950/30 p-4 text-sm text-amber-200">
-              <AlertTriangle size={18} className="mt-0.5 shrink-0" />
-              No result is public-ready until validation and provenance checks pass.
+            <div className="metric-register">
+              {metrics.slice(2, 6).map((metric, index) => <MetricRegisterRow metric={metric} index={index + 2} key={metric.name} />)}
             </div>
-            {summary.data?.provenance && (
-              <dl className="mt-4 space-y-1 text-sm text-slate-300">
-                <div className="flex items-center gap-2"><GitCommit size={14} /><dt className="text-slate-500">git commit</dt><dd className="ml-auto font-mono">{summary.data.provenance.git_commit}</dd></div>
-                <div className="flex items-center gap-2"><FileText size={14} /><dt className="text-slate-500">config sha256</dt><dd className="ml-auto font-mono truncate max-w-[10rem]">{summary.data.provenance.config_sha256 ?? 'n/a'}</dd></div>
-              </dl>
-            )}
-          </Section>
+          </div>
+          {!summary.loading && !summary.data && !summary.error && <p className="empty-results">No results yet. Run scripts/run_analysis.py first.</p>}
         </section>
 
-        <section className="mt-6 grid gap-6 md:grid-cols-2">
-          <Section icon={ListChecks} title="Validation contract">
-            <ul className="space-y-2 text-slate-300">
-              {p.validationContract.map((v) => <li key={v}>• {v}</li>)}
-            </ul>
-          </Section>
-          <Section icon={AlertTriangle} title="Warnings">
-            {warnings.data && warnings.data.length > 0 ? (
-              <ul className="space-y-2 text-sm text-amber-200">
-                {warnings.data.map((w, i) => <li key={i}>• {w}</li>)}
-              </ul>
-            ) : (
-              <p className="text-sm text-slate-400">No warnings recorded in results/warnings.json.</p>
-            )}
-          </Section>
+        <section className="chapter figures-chapter" id="figures">
+          <ChapterTitle number="02" kicker="Evidence plates" title="Residual structure at five scales" copy="Each plate is a generated scientific SVG with a matching sidecar provenance record." />
+          <div className="plate-grid">
+            {p.figures.map((figure, index) => (
+              <figure className={`evidence-plate plate-${index + 1}`} key={figure.id}>
+                <div className="plate-label"><span>Plate {String(index + 1).padStart(2, '0')}</span><i /></div>
+                <img src={`./figures/${figure.id}.svg`} alt={figure.label} loading="lazy" />
+                <figcaption>{figure.label}</figcaption>
+              </figure>
+            ))}
+          </div>
         </section>
 
-        <section className="mt-6 grid gap-6 lg:grid-cols-2">
-          <Section icon={Beaker} title="Methodology">
-            <p className="text-sm leading-relaxed text-slate-300">{p.methodology}</p>
-          </Section>
-          <Section icon={AlertTriangle} title="Assumptions and limitations">
-            <p className="mb-2 text-xs uppercase tracking-wide text-slate-500">Assumptions</p>
-            <ul className="mb-4 space-y-1 text-sm text-slate-300">
-              {p.assumptions.map((a) => <li key={a}>• {a}</li>)}
-            </ul>
-            <p className="mb-2 text-xs uppercase tracking-wide text-slate-500">Limitations</p>
-            <ul className="space-y-1 text-sm text-slate-300">
-              {p.limitations.map((l) => <li key={l}>• {l}</li>)}
-            </ul>
-          </Section>
-        </section>
-
-        <section className="mt-6 grid gap-6 md:grid-cols-2">
-          <Section icon={Download} title="Downloads and provenance manifest">
-            <div className="flex flex-wrap gap-3 text-sm">
-              <a className="rounded-lg border border-slate-700 px-3 py-2 hover:border-cyan-600" href="./manifest.csv" download>data/manifest.csv</a>
-              <a className="rounded-lg border border-slate-700 px-3 py-2 hover:border-cyan-600" href="./source_catalog.csv" download>data/source_catalog.csv</a>
-              <a className="rounded-lg border border-slate-700 px-3 py-2 hover:border-cyan-600" href="./results/summary.json" download>results/summary.json</a>
-              {benchmarks.data && (
-                <a className="rounded-lg border border-slate-700 px-3 py-2 hover:border-cyan-600" href="./results/benchmarks.json" download>results/benchmarks.json</a>
+        <section className="chapter audit-chapter" id="audit">
+          <ChapterTitle number="03" kicker="Trust boundary" title="Provenance before interpretation" />
+          <div className="audit-band">
+            <AuditCard icon={ShieldCheck} title="Provenance boundary" className="provenance-card">
+              <p className="audit-copy">{p.novelty}</p>
+              <div className="validation-gate"><AlertTriangle size={17} />No result is public-ready until validation and provenance checks pass.</div>
+              {summary.data?.provenance && (
+                <dl className="provenance-register">
+                  <div><dt><GitCommit size={14} />Git commit</dt><dd>{summary.data.provenance.git_commit}</dd></div>
+                  <div><dt><FileText size={14} />Config SHA-256</dt><dd title={summary.data.provenance.config_sha256}>{summary.data.provenance.config_sha256 ?? 'n/a'}</dd></div>
+                </dl>
               )}
-            </div>
-            <p className="mt-4 text-xs text-slate-500">
-              data/manifest.csv records product_id, source, source_url, retrieved_utc, sha256, file_size_bytes,
-              selection_reason and licence_or_terms for the real archive query used. data/source_catalog.csv
-              records per-pair separation and chance-alignment probability from the VizieR catalogue.
-            </p>
-          </Section>
-          <Section icon={Database} title="Citation and licence">
-            <p className="text-sm text-slate-300">Author: {p.citation.author}</p>
-            <p className="text-sm text-slate-300">Licence: {p.citation.license}</p>
-            <a className="mt-2 inline-block text-sm text-cyan-300 hover:underline" href={p.citation.repository}>{p.citation.repository}</a>
-          </Section>
+            </AuditCard>
+            <AuditCard icon={Check} title="Validation contract">
+              <ol className="validation-list">
+                {p.validationContract.map((item, index) => <li key={item}><span>{index + 1}</span>{item}</li>)}
+              </ol>
+            </AuditCard>
+          </div>
+
+          <div className="warning-ledger">
+            <p className="warning-ledger-title">Pipeline warning ledger</p>
+            <WarningLedger warnings={warnings} />
+          </div>
         </section>
+
+        <section className="chapter method-chapter" id="method">
+          <ChapterTitle number="04" kicker="Analysis notes" title="What the scale factor can—and cannot—say" />
+          <div className="method-editorial">
+            <article className="method-main">
+              <BookOpen size={19} aria-hidden="true" />
+              <h3>Methodology</h3>
+              <p>{p.methodology}</p>
+            </article>
+            <article className="method-notes">
+              <section>
+                <p>Assumptions</p>
+                <ol>{p.assumptions.map((item, index) => <li key={item}><span>A{index + 1}</span>{item}</li>)}</ol>
+              </section>
+              <section>
+                <p>Limitations</p>
+                <ol>{p.limitations.map((item, index) => <li key={item}><span>L{index + 1}</span>{item}</li>)}</ol>
+              </section>
+            </article>
+          </div>
+        </section>
+
+        <section className="chapter data-chapter" id="data">
+          <ChapterTitle number="05" kicker="Reproducibility" title="Download the astrometric ledger" copy="The archive manifest records source, retrieval, checksum, selection rationale, and data terms." />
+          <div className="data-layout">
+            <div className="download-list">
+              <a href="./manifest.csv" download><span>01</span><strong>data/manifest.csv</strong><ArrowDownToLine size={17} /></a>
+              <a href="./source_catalog.csv" download><span>02</span><strong>data/source_catalog.csv</strong><ArrowDownToLine size={17} /></a>
+              <a href="./results/summary.json" download><span>03</span><strong>results/summary.json</strong><ArrowDownToLine size={17} /></a>
+              {benchmarks.data && <a href="./results/benchmarks.json" download><span>04</span><strong>results/benchmarks.json</strong><ArrowDownToLine size={17} /></a>}
+            </div>
+            <AuditCard icon={Database} title="Citation and licence" className="citation-card">
+              <p>Author <strong>{p.citation.author}</strong></p>
+              <p>Licence <strong>{p.citation.license}</strong></p>
+              <a href={p.citation.repository}>Repository <ExternalLink size={14} /></a>
+            </AuditCard>
+          </div>
+        </section>
+
+        <footer className="atlas-footer"><span>Gaia wide-binary consistency audit</span><span>Research atlas · 2026</span></footer>
       </div>
     </main>
   );

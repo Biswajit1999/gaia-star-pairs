@@ -7,7 +7,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
+import scienceplots  # noqa: E402, F401 - importing registers the SciencePlots styles
 
 from gaia_wide_binary_consistency_audit.core import demo_series, run_pipeline  # noqa: E402
 from gaia_wide_binary_consistency_audit.io import load_pair_records  # noqa: E402
@@ -21,6 +23,8 @@ from gaia_wide_binary_consistency_audit.plotting import (  # noqa: E402
 )
 from gaia_wide_binary_consistency_audit.provenance import get_git_commit, sha256_config  # noqa: E402
 from gaia_wide_binary_consistency_audit.synthetic import generate_demo_dataset, generate_synthetic_pairs  # noqa: E402
+
+plt.style.use(["science", "no-latex"])
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FIGURES_DIR = REPO_ROOT / "figures"
