@@ -108,7 +108,7 @@ for authoritative DR3 astrometry per component (same pattern verified in project
 - All magnitude and separation bins (n<30) are below
   `minimum_sample_size=30` and flagged, not hidden, in `results/warnings.json`.
 
-## 7. Remaining TODOs / unresolved risks
+## 7. Follow-up risk register
 
 - `reports/report.tex` could not be compiled to PDF locally (no LaTeX
   toolchain); structural completeness was checked, not a rendered PDF.
