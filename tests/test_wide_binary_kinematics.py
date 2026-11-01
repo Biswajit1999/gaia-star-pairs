@@ -1,7 +1,12 @@
+import sys
+from pathlib import Path
+
 import numpy as np
 import pytest
 
-from research.wide_binary_kinematics import (
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from research.wide_binary_kinematics import (  # noqa: E402
     KMS_PER_AU_PER_YEAR, chi2_components, delta_method_speed_sigma,
     monte_carlo_speed_ratio, projected_kinematics,
 )
