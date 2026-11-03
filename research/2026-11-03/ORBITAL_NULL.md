@@ -1,0 +1,7 @@
+# Conditional orbital-motion null (3 November 2026)
+
+Issue #3. This is a separate sensitivity experiment, not a modification to the retained 30 Gaia DR3 pairs. Source: Newtonian two-body circular speed v = sqrt(G M / r); isotropic position directions and tangent directions; projected separation s = r sqrt(1 - cos² theta). For each draw the true separation is deprojected as r=s/sin(theta), with the projected velocity obtained from the *same* orbit orientation. These distributions depend on a hypothetical total mass and circular-orbit assumption. They are not posterior distributions for observed binaries: there is no distance prior, eccentricity distribution, selection function or orbital-phase conditioning beyond isotropic directions.
+
+The Gaussian residual diagnostic reports the observed quadratic form and the noncentrality lambda = muᵀ C⁻¹ mu, whose expected chi-square is dimension + lambda for a *specified* positive-definite covariance and mean shift. Orbital motion can increase apparent Gaia proper-motion inconsistency without implying astrometric error miscalibration.
+
+Reproduce locally (NumPy and pytest required): `cd research/2026-11-03 && python -m pytest -q test_orbital_null.py`. Illustrative seed=11, mass=1.2 solar masses, projected separation=1000 AU, 20000 orientations yields 5/50/95% projected speed quantiles of approximately 0.304/0.693/0.995 km/s. No Gaia source products or archived results were changed. Scientific implementation prepared with AI assistance; commit attribution follows the authenticated repository identity.
