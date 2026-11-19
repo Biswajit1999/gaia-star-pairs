@@ -1,0 +1,86 @@
+{
+  "project": "Gaia Wide-Binary Astrometric Consistency Audit",
+  "repository": "https://github.com/Biswajit1999/gaia-star-pairs",
+  "files": [
+    {
+      "label": "Provenance",
+      "path": "data/provenance.yml",
+      "role": "Data and provenance"
+    },
+    {
+      "label": "Source catalog",
+      "path": "data/source_catalog.csv",
+      "role": "Data and provenance"
+    },
+    {
+      "label": "Manifest",
+      "path": "data/manifest.csv",
+      "role": "Data and provenance"
+    },
+    {
+      "label": "Research reference",
+      "path": "data/research-reference.json",
+      "role": "Data and provenance"
+    },
+    {
+      "label": "Demo",
+      "path": "data/example/demo.csv",
+      "role": "Data and provenance"
+    },
+    {
+      "label": "Real pairs",
+      "path": "data/processed/real_pairs.csv",
+      "role": "Data and provenance"
+    },
+    {
+      "label": "Fig04 separation sensitivity demo",
+      "path": "figures/fig04_separation_sensitivity_demo.json",
+      "role": "Tables and numerical results"
+    },
+    {
+      "label": "Fig04 separation sensitivity real",
+      "path": "figures/fig04_separation_sensitivity_real.json",
+      "role": "Tables and numerical results"
+    },
+    {
+      "label": "Fig05 synthetic recovery",
+      "path": "figures/fig05_synthetic_recovery.json",
+      "role": "Tables and numerical results"
+    },
+    {
+      "label": "Fig01 selection flow demo",
+      "path": "figures/fig01_selection_flow_demo.json",
+      "role": "Tables and numerical results"
+    },
+    {
+      "label": "Fig01 selection flow real",
+      "path": "figures/fig01_selection_flow_real.json",
+      "role": "Tables and numerical results"
+    },
+    {
+      "label": "Fig02 normalized residuals demo",
+      "path": "figures/fig02_normalized_residuals_demo.json",
+      "role": "Tables and numerical results"
+    },
+    {
+      "label": "Fig04 separation sensitivity demo",
+      "path": "figures/fig04_separation_sensitivity_demo.png",
+      "role": "Figures"
+    },
+    {
+      "label": "Fig04 separation sensitivity real",
+      "path": "figures/fig04_separation_sensitivity_real.png",
+      "role": "Figures"
+    },
+    {
+      "label": "Fig05 synthetic recovery",
+      "path": "figures/fig05_synthetic_recovery.png",
+      "role": "Figures"
+    },
+    {
+      "label": "Fig01 selection flow demo",
+      "path": "figures/fig01_selection_flow_demo.png",
+      "role": "Figures"
+    }
+  ]
+}

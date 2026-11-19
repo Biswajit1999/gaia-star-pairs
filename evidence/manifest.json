@@ -1,0 +1,352 @@
+{
+  "schema": 1,
+  "project": "Gaia Wide-Binary Astrometric Consistency Audit",
+  "repository": "https://github.com/Biswajit1999/gaia-star-pairs",
+  "files": [
+    {
+      "label": "Provenance",
+      "path": "data/provenance.yml",
+      "role": "Data and provenance",
+      "bytes": 585,
+      "sha256": "098d4a963e75b38f3db6bdbd4a14b22b0c014300de1177e0a27de33839e4ead0",
+      "hash_basis": "LF-normalised text",
+      "format": "YML"
+    },
+    {
+      "label": "Source catalog",
+      "path": "data/source_catalog.csv",
+      "role": "Data and provenance",
+      "bytes": 1977,
+      "sha256": "f74d50285f5dbaec0958b695794b8e740074fbb241d09796545e1303d81e7b16",
+      "hash_basis": "LF-normalised text",
+      "format": "CSV",
+      "rows": 30,
+      "columns": 5,
+      "headers": [
+        "pair_id",
+        "source_id_a",
+        "source_id_b",
+        "sep_au",
+        "r_chance_align"
+      ],
+      "preview": [
+        [
+          "WB0000",
+          "1003080575370626944",
+          "1003080575370617728",
+          "658.4",
+          "7.9316e-06"
+        ],
+        [
+          "WB0001",
+          "100536353946761728",
+          "100536353946762112",
+          "1677.5",
+          "0.00019496"
+        ],
+        [
+          "WB0002",
+          "1006533767732900736",
+          "1006533763440848256",
+          "620.8",
+          "9.1814e-07"
+        ],
+        [
+          "WB0003",
+          "1008929564913828224",
+          "1008929569208837376",
+          "854.2",
+          "6.6423e-06"
+        ]
+      ]
+    },
+    {
+      "label": "Manifest",
+      "path": "data/manifest.csv",
+      "role": "Data and provenance",
+      "bytes": 764,
+      "sha256": "3735df0e9c710cc5193ae5c7312a3f053d7d06e15a7eb9043f323972f3b32df0",
+      "hash_basis": "LF-normalised text",
+      "format": "CSV",
+      "rows": 1,
+      "columns": 8,
+      "headers": [
+        "product_id",
+        "source",
+        "source_url",
+        "retrieved_utc",
+        "sha256",
+        "file_size_bytes",
+        "selection_reason"
+      ],
+      "preview": [
+        [
+          "wide_binary_real_sample_v1",
+          "VizieR J/MNRAS/506/2269 + Gaia DR3 (gaiadr3.gaia_source)",
+          "https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=J/ApJ/934/148",
+          "2026-07-16T10:46:24.253760+00:00",
+          "4233a7ed98b7ac6e7695ecb9a42f17d7ea54c59cf817081c55729d7ffc60ea1d",
+          "10766",
+          "deterministic row-limited VizieR sample (n_pairs=30), cross-matched against live Gaia DR3 TAP; 30 pairs retained, 0 skipped for..."
+        ]
+      ]
+    },
+    {
+      "label": "Research reference",
+      "path": "data/research-reference.json",
+      "role": "Data and provenance",
+      "bytes": 700,
+      "sha256": "f8df71873217bfcc2c970f72e1739152bdeaf3c277bda3465ccc69ec5babb3cf",
+      "hash_basis": "LF-normalised text",
+      "format": "JSON",
+      "keys": [
+        "title",
+        "description",
+        "equations",
+        "references",
+        "anchors"
+      ],
+      "arrays": {
+        "equations": 3,
+        "references": 1,
+        "anchors": 3
+      }
+    },
+    {
+      "label": "Demo",
+      "path": "data/example/demo.csv",
+      "role": "Data and provenance",
+      "bytes": 80,
+      "sha256": "2231cd2f44a7854fefcb8da60f527333a903c9c7a75fbd9154fdde13de699305",
+      "hash_basis": "LF-normalised text",
+      "format": "CSV",
+      "rows": 5,
+      "columns": 3,
+      "headers": [
+        "x",
+        "value",
+        "uncertainty"
+      ],
+      "preview": [
+        [
+          "0",
+          "0.10",
+          "0.02"
+        ],
+        [
+          "1",
+          "0.18",
+          "0.03"
+        ],
+        [
+          "2",
+          "0.14",
+          "0.02"
+        ],
+        [
+          "3",
+          "0.24",
+          "0.04"
+        ]
+      ]
+    },
+    {
+      "label": "Real pairs",
+      "path": "data/processed/real_pairs.csv",
+      "role": "Data and provenance",
+      "bytes": 10735,
+      "sha256": "e3a72f37ab2c5a23acc6a0d765703acca849d4b9a37bd318c58c3cc1fa3e247e",
+      "hash_basis": "LF-normalised text",
+      "format": "CSV",
+      "rows": 30,
+      "columns": 19,
+      "headers": [
+        "pair_id",
+        "source_id_a",
+        "source_id_b",
+        "parallax_a",
+        "parallax_a_error",
+        "parallax_b",
+        "parallax_b_error"
+      ],
+      "preview": [
+        [
+          "WB0000",
+          "1003080575370626944",
+          "1003080575370617728",
+          "9.945238640203309",
+          "0.5370549559593201",
+          "9.497094370166854",
+          "0.6354455351829529"
+        ],
+        [
+          "WB0001",
+          "100536353946761728",
+          "100536353946762112",
+          "4.584894977494072",
+          "0.6148744225502014",
+          "5.554634019341078",
+          "0.9381451606750488"
+        ],
+        [
+          "WB0002",
+          "1006533767732900736",
+          "1006533763440848256",
+          "4.843248662224841",
+          "0.47549453377723694",
+          "4.904897587275129",
+          "0.3468643128871918"
+        ],
+        [
+          "WB0003",
+          "1008929564913828224",
+          "1008929569208837376",
+          "4.911993253938134",
+          "0.29748424887657166",
+          "5.235379521397558",
+          "0.22516030073165894"
+        ]
+      ]
+    },
+    {
+      "label": "Fig04 separation sensitivity demo",
+      "path": "figures/fig04_separation_sensitivity_demo.json",
+      "role": "Tables and numerical results",
+      "bytes": 234,
+      "sha256": "bdac8515aae7d81b25e55de004207889fd7380bca4d83f2f3931d5366da8cff8",
+      "hash_basis": "LF-normalised text",
+      "format": "JSON",
+      "keys": [
+        "git_commit",
+        "config_sha256",
+        "figure",
+        "bins"
+      ],
+      "arrays": {
+        "bins": 4
+      }
+    },
+    {
+      "label": "Fig04 separation sensitivity real",
+      "path": "figures/fig04_separation_sensitivity_real.json",
+      "role": "Tables and numerical results",
+      "bytes": 234,
+      "sha256": "14e5e3c41569563c92c9b415e175a9a0c23696ae5e5dadf01561f14b8225acc5",
+      "hash_basis": "LF-normalised text",
+      "format": "JSON",
+      "keys": [
+        "git_commit",
+        "config_sha256",
+        "figure",
+        "bins"
+      ],
+      "arrays": {
+        "bins": 4
+      }
+    },
+    {
+      "label": "Fig05 synthetic recovery",
+      "path": "figures/fig05_synthetic_recovery.json",
+      "role": "Tables and numerical results",
+      "bytes": 411,
+      "sha256": "a12f37c268a87fe68cfbcbe113b6bba01366f63b870ba795bcb125617f517784",
+      "hash_basis": "LF-normalised text",
+      "format": "JSON",
+      "keys": [
+        "git_commit",
+        "config_sha256",
+        "figure",
+        "injected_scales",
+        "recovered_scales"
+      ],
+      "arrays": {
+        "injected_scales": 6,
+        "recovered_scales": 6
+      }
+    },
+    {
+      "label": "Fig01 selection flow demo",
+      "path": "figures/fig01_selection_flow_demo.json",
+      "role": "Tables and numerical results",
+      "bytes": 249,
+      "sha256": "6d4d99a1f0282b2058bbebfcb0293d0d7d65cbcad579d73527a58c5a2a8dacce",
+      "hash_basis": "LF-normalised text",
+      "format": "JSON",
+      "keys": [
+        "git_commit",
+        "config_sha256",
+        "figure",
+        "stage_counts"
+      ],
+      "arrays": {}
+    },
+    {
+      "label": "Fig01 selection flow real",
+      "path": "figures/fig01_selection_flow_real.json",
+      "role": "Tables and numerical results",
+      "bytes": 249,
+      "sha256": "6d4d99a1f0282b2058bbebfcb0293d0d7d65cbcad579d73527a58c5a2a8dacce",
+      "hash_basis": "LF-normalised text",
+      "format": "JSON",
+      "keys": [
+        "git_commit",
+        "config_sha256",
+        "figure",
+        "stage_counts"
+      ],
+      "arrays": {}
+    },
+    {
+      "label": "Fig02 normalized residuals demo",
+      "path": "figures/fig02_normalized_residuals_demo.json",
+      "role": "Tables and numerical results",
+      "bytes": 179,
+      "sha256": "584c3abc8a3a385c4876e4c4b7fe7a9774a6cd87bf1b1db3fb0a3cde4493e2e4",
+      "hash_basis": "LF-normalised text",
+      "format": "JSON",
+      "keys": [
+        "git_commit",
+        "config_sha256",
+        "figure",
+        "n_pairs"
+      ],
+      "arrays": {}
+    },
+    {
+      "label": "Fig04 separation sensitivity demo",
+      "path": "figures/fig04_separation_sensitivity_demo.png",
+      "role": "Figures",
+      "bytes": 133975,
+      "sha256": "0bbcd15da5db21a6f894743d435050f120a80c85380247167fd430492bcde7b1",
+      "hash_basis": "exact bytes",
+      "format": "PNG"
+    },
+    {
+      "label": "Fig04 separation sensitivity real",
+      "path": "figures/fig04_separation_sensitivity_real.png",
+      "role": "Figures",
+      "bytes": 126036,
+      "sha256": "b1544cb63296b6ec3900663c3cbbdd0c8a3faf213094d8f768b6eaf3034b07d4",
+      "hash_basis": "exact bytes",
+      "format": "PNG"
+    },
+    {
+      "label": "Fig05 synthetic recovery",
+      "path": "figures/fig05_synthetic_recovery.png",
+      "role": "Figures",
+      "bytes": 133169,
+      "sha256": "9a091d89760f573976a2d3e097101a8763beea2d47ac739e6286bdd330e8a446",
+      "hash_basis": "exact bytes",
+      "format": "PNG"
+    },
+    {
+      "label": "Fig01 selection flow demo",
+      "path": "figures/fig01_selection_flow_demo.png",
+      "role": "Figures",
+      "bytes": 83606,
+      "sha256": "d16c084547f922748a021e68ad8f83ecd55b29bd9a5739b89d8dc086af965b76",
+      "hash_basis": "exact bytes",
+      "format": "PNG"
+    }
+  ]
+}
