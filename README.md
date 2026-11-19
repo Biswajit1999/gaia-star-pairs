@@ -4,6 +4,12 @@
 
 > **Curation:** `BUILD_FIRST` · Priority 9.1/10 · real public wide-binary catalogue
 
+## Research evidence and downloads
+
+[Open the evidence browser file](evidence.html) for 16 selected files, including [`fig04_separation_sensitivity_demo.json`](figures/fig04_separation_sensitivity_demo.json). Each file has a download link and SHA-256 digest. Serve this checkout with `python -m http.server` to view the static browser.
+
+Rebuild the inventory and browser with `python scripts/evidence_catalog.py` and `python scripts/render_evidence_page.py`.
+
 ## Scientific question
 
 Are component parallaxes and proper motions statistically consistent with quoted Gaia uncertainties across magnitude, separation and quality bins?
