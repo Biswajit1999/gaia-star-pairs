@@ -6,6 +6,13 @@
 
 ## Research evidence and downloads
 
+
+- [Download the machine-readable table profiles](evidence/table-profiles.json) for 4 archived tables. Open `table-evidence.html` from the checkout for the coverage chart.
+- Start with [Fig04 separation sensitivity demo](figures/fig04_separation_sensitivity_demo.json), [Fig04 separation sensitivity real](figures/fig04_separation_sensitivity_real.json), [Fig05 synthetic recovery](figures/fig05_synthetic_recovery.json).
+- [View Fig04 separation sensitivity demo](figures/fig04_separation_sensitivity_demo.png).
+
+To rebuild the table profiles after rebuilding the evidence inventory, run `python scripts/profile_evidence_tables.py` followed by `python scripts/render_table_profiles.py`.
+
 [Open the evidence browser file](evidence.html) for 16 selected files, including [`fig04_separation_sensitivity_demo.json`](figures/fig04_separation_sensitivity_demo.json). Each file has a download link and SHA-256 digest. Serve this checkout with `python -m http.server` to view the static browser.
 
 Rebuild the inventory and browser with `python scripts/evidence_catalog.py` and `python scripts/render_evidence_page.py`.
