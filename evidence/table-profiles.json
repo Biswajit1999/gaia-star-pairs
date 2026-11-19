@@ -1,0 +1,340 @@
+{
+  "schema": 1,
+  "project": "Gaia Wide-Binary Astrometric Consistency Audit",
+  "tables": [
+    {
+      "path": "data/source_catalog.csv",
+      "label": "Source catalog",
+      "role": "Data and provenance",
+      "rows": 30,
+      "width_mismatches": 0,
+      "columns": [
+        {
+          "name": "pair_id",
+          "blank": 0,
+          "text": 30,
+          "finite": 0,
+          "nonfinite": 0
+        },
+        {
+          "name": "source_id_a",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 1.0053635394676173e+17,
+          "maximum": 1.1006553303243516e+18
+        },
+        {
+          "name": "source_id_b",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 1.0053635394676211e+17,
+          "maximum": 1.1002672370774497e+18
+        },
+        {
+          "name": "sep_au",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 139.5,
+          "maximum": 14414.1
+        },
+        {
+          "name": "r_chance_align",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 1.3488e-11,
+          "maximum": 0.032244
+        }
+      ]
+    },
+    {
+      "path": "data/manifest.csv",
+      "label": "Manifest",
+      "role": "Data and provenance",
+      "rows": 1,
+      "width_mismatches": 0,
+      "columns": [
+        {
+          "name": "product_id",
+          "blank": 0,
+          "text": 1,
+          "finite": 0,
+          "nonfinite": 0
+        },
+        {
+          "name": "source",
+          "blank": 0,
+          "text": 1,
+          "finite": 0,
+          "nonfinite": 0
+        },
+        {
+          "name": "source_url",
+          "blank": 0,
+          "text": 1,
+          "finite": 0,
+          "nonfinite": 0
+        },
+        {
+          "name": "retrieved_utc",
+          "blank": 0,
+          "text": 1,
+          "finite": 0,
+          "nonfinite": 0
+        },
+        {
+          "name": "sha256",
+          "blank": 0,
+          "text": 1,
+          "finite": 0,
+          "nonfinite": 0
+        },
+        {
+          "name": "file_size_bytes",
+          "blank": 0,
+          "text": 0,
+          "finite": 1,
+          "nonfinite": 0,
+          "minimum": 10766.0,
+          "maximum": 10766.0
+        },
+        {
+          "name": "selection_reason",
+          "blank": 0,
+          "text": 1,
+          "finite": 0,
+          "nonfinite": 0
+        },
+        {
+          "name": "licence_or_terms",
+          "blank": 0,
+          "text": 1,
+          "finite": 0,
+          "nonfinite": 0
+        }
+      ]
+    },
+    {
+      "path": "data/example/demo.csv",
+      "label": "Demo",
+      "role": "Data and provenance",
+      "rows": 5,
+      "width_mismatches": 0,
+      "columns": [
+        {
+          "name": "x",
+          "blank": 0,
+          "text": 0,
+          "finite": 5,
+          "nonfinite": 0,
+          "minimum": 0.0,
+          "maximum": 4.0
+        },
+        {
+          "name": "value",
+          "blank": 0,
+          "text": 0,
+          "finite": 5,
+          "nonfinite": 0,
+          "minimum": 0.1,
+          "maximum": 0.24
+        },
+        {
+          "name": "uncertainty",
+          "blank": 0,
+          "text": 0,
+          "finite": 5,
+          "nonfinite": 0,
+          "minimum": 0.02,
+          "maximum": 0.04
+        }
+      ]
+    },
+    {
+      "path": "data/processed/real_pairs.csv",
+      "label": "Real pairs",
+      "role": "Data and provenance",
+      "rows": 30,
+      "width_mismatches": 0,
+      "columns": [
+        {
+          "name": "pair_id",
+          "blank": 0,
+          "text": 30,
+          "finite": 0,
+          "nonfinite": 0
+        },
+        {
+          "name": "source_id_a",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 1.0053635394676173e+17,
+          "maximum": 1.1006553303243516e+18
+        },
+        {
+          "name": "source_id_b",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 1.0053635394676211e+17,
+          "maximum": 1.1002672370774497e+18
+        },
+        {
+          "name": "parallax_a",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 2.8731913931125455,
+          "maximum": 35.84601104436383
+        },
+        {
+          "name": "parallax_a_error",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 0.03423980623483658,
+          "maximum": 0.9187743663787842
+        },
+        {
+          "name": "parallax_b",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 3.047922888300535,
+          "maximum": 35.973434530627046
+        },
+        {
+          "name": "parallax_b_error",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 0.045283567160367966,
+          "maximum": 1.2012320756912231
+        },
+        {
+          "name": "pmra_a",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": -189.13319232860835,
+          "maximum": 83.64359980417817
+        },
+        {
+          "name": "pmra_a_error",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 0.032674092799425125,
+          "maximum": 0.8529943227767944
+        },
+        {
+          "name": "pmra_b",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": -188.82210673301242,
+          "maximum": 84.20343283333877
+        },
+        {
+          "name": "pmra_b_error",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 0.035750288516283035,
+          "maximum": 1.352382779121399
+        },
+        {
+          "name": "pmdec_a",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": -398.3737946474624,
+          "maximum": 31.83713706294294
+        },
+        {
+          "name": "pmdec_a_error",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 0.030115272849798203,
+          "maximum": 0.9567511081695557
+        },
+        {
+          "name": "pmdec_b",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": -397.6427903304353,
+          "maximum": 32.60946681653288
+        },
+        {
+          "name": "pmdec_b_error",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 0.03708972409367561,
+          "maximum": 1.457806944847107
+        },
+        {
+          "name": "mean_g_mag",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 16.37648868560791,
+          "maximum": 20.665979385375977
+        },
+        {
+          "name": "separation_arcsec",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 1.0333324611305965,
+          "maximum": 489.4207938153329
+        },
+        {
+          "name": "ruwe_a",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 0.9249425530433655,
+          "maximum": 1.207919955253601
+        },
+        {
+          "name": "ruwe_b",
+          "blank": 0,
+          "text": 0,
+          "finite": 30,
+          "nonfinite": 0,
+          "minimum": 0.9474013447761536,
+          "maximum": 1.0960723161697388
+        }
+      ]
+    }
+  ],
+  "excluded": []
+}
